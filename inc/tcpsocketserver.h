@@ -8,7 +8,7 @@
 
 typedef struct {
     quint8 pendingBytes;
-    QByteArray receivedData;
+    QByteArray *receivedData;
 } ReceivedDataState;
 
 class tcpSocketServer : public QObject
@@ -22,15 +22,18 @@ signals:
     /**
      * @brief receivedDataPack
      * Sinal emitido quando o servidor termina de receber o pacote de dados
-     * completo do client.
+     * completo do client. O ponteiro é emitido como const para impedir que os
+     * receptores do sinal alterem o conteúdo do buffer de recebimento no HEAP.
      * @param newDataPack
      */
-    void receivedDataPack(QByteArray newDataPack);
+    void receivedDataPack(const QByteArray *newDataPack);
 
 protected slots:
     /**
      * @brief gotNewConnection
      * Método executado sempre que um client solicita a conexão com o servidor.
+     * Este método aloca os recursos necessário para tratar os dados recebidos
+     * de cada um dos clientes.
      */
     void gotNewClientConnection(void);
 

@@ -15,7 +15,7 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp \
+SOURCES += src/main.cpp \
     src/tcpsocketserver.cpp
 
 HEADERS += \
